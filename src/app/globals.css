@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  /* Serial Dynamics — carried over from the printed plan */
+  --color-ink: #12100e;
+  --color-ink-soft: #1a1714;
+  --color-ink-line: #2b2621;
+  --color-bone: #f2eee6;
+  --color-bone-dim: #a39a8e;
+  --color-brass: #c9922f;
+  --color-brass-deep: #8a5a12;
+
+  /* Sample contractor site — deliberately a different brand */
+  --color-navy: #0f2942;
+  --color-navy-soft: #16385b;
+  --color-safety: #e2670f;
+  --color-paper: #f7f6f3;
+  --color-paper-line: #dfdbd3;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-stack), ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    text-wrap: pretty;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* Portfolio motion. Content stays visible until JS opts in, and only when motion is allowed. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .rise-late {
+    animation-delay: 120ms;
+  }
+  [data-motion="wait"] {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  [data-motion="in"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .lift {
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .lift:hover {
+    transform: translateY(-2px);
+  }
+  .nudge {
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .nudge {
+    transform: translateX(3px);
+  }
+  .frame-photo {
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .frame-photo {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
